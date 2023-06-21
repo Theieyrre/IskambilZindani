@@ -10,9 +10,9 @@
         android:id="@+id/textView"
         android:layout_width="320dp"
         android:layout_height="58dp"
-        android:text="İskambil Zindanı"
+        android:text="@string/main_title"
         android:textAlignment="center"
-        android:textSize="100px"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -20,55 +20,55 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.137" />
 
+
     <Button
         android:id="@+id/button"
-        android:layout_width="155dp"
-        android:layout_height="50dp"
+        android:layout_width="195dp"
+        android:layout_height="59dp"
         android:background="#633333"
-        android:text="BAŞLA"
+        android:text="@string/main_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.831" />
+        app:layout_constraintVertical_bias="0.852" />
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="320dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="232dp"
+    <LinearLayout
+        android:layout_width="410dp"
+        android:layout_height="403dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="320dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="456dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner3"
-        android:layout_width="320dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="384dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="50dp"
+            android:textAlignment="center"/>
 
-    <Spinner
-        android:id="@+id/spinner4"
-        android:layout_width="320dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="312dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="50dp"
+            android:textAlignment="center"/>
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="50dp"
+            android:textAlignment="center"/>
+
+        <Spinner
+            android:id="@+id/spinner4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="50dp"
+            android:textAlignment="center"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
