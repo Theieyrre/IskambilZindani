@@ -1,4 +1,4 @@
-package com.example.iskambilzindani.varliklar;
+package com.example.iskambilzindani;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class IskambilKart {

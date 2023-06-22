@@ -38,15 +38,15 @@ public class Varlik {
 
     public String gercekHasarAl(int hasarDegeri) {
         this.mevcutCan = Math.max(0, this.mevcutCan - hasarDegeri);
-        return ad + " " + hasarDegeri + " hasar aldı, mevcut can: " + this.mevcutCan;
+        return this.ad + " " + hasarDegeri + " hasar aldı, mevcut can: " + this.mevcutCan;
     }
 
-    public String saldir(Varlik dusman){
+    public String saldir(Varlik dusman, int hasar){
         if(this.saldirabilir) {
-            String hasarDonut = dusman.hasarAl(this.hasar);
-            return ad + ", " + dusman.ad + " varlığına " + hasar + " hasar ile saldırdı\n" + hasarDonut;
+            String hasarDonut = dusman.hasarAl(hasar);
+            return this.ad + ", " + dusman.ad + " varlığına " + hasar + " hasar ile saldırdı\n" + hasarDonut;
         }else{
-            return ad + " bu tur saldıramadı";
+            return this.ad + " bu tur saldıramadı";
         }
     }
 
