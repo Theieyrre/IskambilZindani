@@ -4,6 +4,7 @@ import com.example.iskambilzindani.IskambilKart;
 import com.example.iskambilzindani.efektler.Efekt;
 import com.example.iskambilzindani.efektler.ZayiflatEfekti;
 
+/* TODO sb.append için \n ekle */
 public class Savasci extends Varlik{
     public int hiddet;
     public Savasci(){
