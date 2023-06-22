@@ -31,14 +31,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         final Spinner spinner4 = findViewById(R.id.spinner4);
         spinner4.setOnItemSelectedListener(this);
 
-        List<String> heroes = new ArrayList<>();
-        heroes.add("--Savaşa katılmıyor--");
-        heroes.add("Savaşçı");
-        heroes.add("Büyücü");
-        heroes.add("Haydut");
-        heroes.add("Şaman");
+        List<String> kahramanlar = new ArrayList<>();
+        kahramanlar.add("--Savaşa katılmıyor--");
+        kahramanlar.add("Savaşçı");
+        kahramanlar.add("Büyücü");
+        kahramanlar.add("Haydut");
+        kahramanlar.add("Şaman");
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, heroes);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, kahramanlar);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner1.setAdapter(dataAdapter);

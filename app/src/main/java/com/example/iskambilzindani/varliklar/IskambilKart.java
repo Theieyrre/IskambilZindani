@@ -1,21 +1,17 @@
-package com.example.iskambilzindani.siniflar;
+package com.example.iskambilzindani.varliklar;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class IskambilKart {
-    private final int suit; /* 0: maça, 1: kupa, 2: sinek 3: karo */
-    private final int deger;
-    private final boolean asMi;
-    private final boolean ozelMi;
+    public final int suit; /* 0: maça, 1: kupa, 2: sinek 3: karo */
+    public final int deger;
+    public final boolean asMi;
+    public final boolean ozelMi;
 
     public IskambilKart(int suit, int kartDeger){
         this.suit = suit;
         this.deger = kartDeger;
         this.ozelMi = kartDeger == 10;
-        this.asMi = kartDeger == 14;
-    }
-
-    public int getDeger(){
-        return this.deger;
+        this.asMi = kartDeger == 15;
     }
 
     public boolean kirmiziMi(){

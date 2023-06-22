@@ -1,16 +1,19 @@
-package com.example.iskambilzindani.siniflar;
+package com.example.iskambilzindani.efektler;
+
+import com.example.iskambilzindani.varliklar.Varlik;
 
 public class Efekt {
     private final String ad;
-    private int tur;
+    public int tur;
 
     public Efekt(String isim, int turSayisi) {
         this.ad = isim;
         this.tur = turSayisi;
     }
 
-    public void setTur(int yeniTur){
-        this.tur = yeniTur;
+    public String tetikle(Varlik v){
+        this.tur--;
+        return v.ad + " için " + this.ad + " tetiklendi";
     }
 
     @Override
