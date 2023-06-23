@@ -6,6 +6,8 @@ import com.example.iskambilzindani.efektler.Efekt;
 import com.example.iskambilzindani.efektler.YanmaEfekti;
 import com.example.iskambilzindani.varliklar.Varlik;
 
+import java.util.Arrays;
+
 public class Buyucu extends Varlik {
     public int sihirGucu;
     public Buyucu(String[] secilenYetenekler){
@@ -126,6 +128,28 @@ public class Buyucu extends Varlik {
     public void sifirla(){
         super.sifirla();
         this.sihirGucu = 0;
+    }
+
+    public String saldirArayuz(String yetenekAdi, Varlik[] dusmanlar, int dusmanIndex, IskambilKart kart){
+        int rng = (int)(Math.random() * 21);
+        String sonuc = "";
+        switch(yetenekAdi){
+            case "Basit Saldırı": sonuc = this.basitSaldiri(dusmanlar[dusmanIndex], kart);
+                break;
+            case "Ateş Topu": sonuc = this.atesTopu(dusmanlar[dusmanIndex], kart);
+                break;
+            case "Magma Patlamaları": sonuc = this.magmaPatlamalari(dusmanlar, kart);
+                break;
+            case "Donduran Yıkım": sonuc = this.donduranYikim(dusmanlar, kart, rng);
+                break;
+            case "Buz Şoku": sonuc = this.buzSoku(dusmanlar[dusmanIndex], kart, rng);
+                break;
+            case "Çifte Yıkım": sonuc = this.cifteYikim(dusmanlar, kart);
+                break;
+            case "Enerji Patlaması": sonuc = this.enerjiPatlamasi(dusmanlar, kart, rng);
+                break;
+        }
+        return sonuc;
     }
 
     @Override

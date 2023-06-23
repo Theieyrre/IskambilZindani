@@ -5,6 +5,8 @@ import com.example.iskambilzindani.efektler.Efekt;
 import com.example.iskambilzindani.efektler.ZayiflatEfekti;
 import com.example.iskambilzindani.varliklar.Varlik;
 
+import java.util.Arrays;
+
 public class Savasci extends Varlik {
     public int hiddet;
     public Savasci(String[] secilenYetenekler){
@@ -120,6 +122,28 @@ public class Savasci extends Varlik {
     public void sifirla(){
         super.sifirla();
         this.hiddet = 0;
+    }
+
+    public String saldirArayuz(String yetenekAdi, Varlik[] dusmanlar, int dusmanIndex, IskambilKart kart){
+        int rng = (int)(Math.random() * 21);
+        String sonuc = "";
+        switch(yetenekAdi){
+            case "Basit Saldırı": sonuc = this.basitSaldiri(dusmanlar[dusmanIndex], kart);
+            break;
+            case "Hiddet Patlaması": sonuc = this.hiddetPatlamasi(Arrays.copyOfRange(dusmanlar, dusmanIndex-1, dusmanIndex+1), kart);
+            break;
+            case "Dayan!": sonuc = this.dayan(kart);
+            break;
+            case "Uyuşturan Darbe": sonuc = this.uyusturanDarbe(dusmanlar[dusmanIndex], kart, rng);
+            break;
+            case "En İyi Defans": sonuc = this.enIyiDefans(dusmanlar[dusmanIndex], kart);
+            break;
+            case "Diren!": sonuc = this.diren(kart);
+            break;
+            case "Savaşın Dengesi": sonuc = this.savasinDengesi(dusmanlar, kart, rng);
+            break;
+        }
+        return sonuc;
     }
 
     @Override
