@@ -44,13 +44,9 @@ public class Buyucu extends Varlik{
     /* Magma patlamaları */
     /* 0.3K hasar sihirGucunden 3 kat etkilenir */
     public String magmaPatlamalari(Varlik[] dusmanlar, IskambilKart kart){
-        StringBuilder sb = new StringBuilder();
         int verilecekHasar = this.hasar + (this.sihirGucu * 3);
         verilecekHasar += (int) Math.ceil(kart.deger * 0.3);
-        for(Varlik v: dusmanlar){
-            sb.append(v.hasarAl(verilecekHasar));
-        }
-        return sb.toString();
+        return this.tumSaldir(dusmanlar, verilecekHasar);
     }
 
     /* Donduran Yıkım */
@@ -60,16 +56,9 @@ public class Buyucu extends Varlik{
         int verilecekHasar = this.hasar + this.sihirGucu;
         verilecekHasar += (int) Math.ceil(kart.deger * 0.5);
         int rngSinir = kart.siyahMi() ? 6 : 2;
-        boolean donma = rng <= rngSinir;
-        Efekt yeniEfekt = new DonmaEfekti(1);
-        for(Varlik v: dusmanlar){
-            sb.append(v.hasarAl(verilecekHasar));
-        }
-        if(donma) {
-            for (Varlik v : dusmanlar) {
-                v.efektler.add(yeniEfekt);
-            }
-            sb.append("Tüm düşmanlara" + yeniEfekt + " uygulandı\n");
+        sb.append(this.tumSaldir(dusmanlar, verilecekHasar));
+        if(rng <= rngSinir) {
+            this.tumUygula(dusmanlar, new DonmaEfekti(1));
         }
         return sb.toString();
     }

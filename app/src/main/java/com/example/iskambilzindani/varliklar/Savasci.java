@@ -27,19 +27,15 @@ public class Savasci extends Varlik{
 
     /* Hiddet Patlaması */
     /* 1K hasar eğer 3+ hiddetse ardışık 3 düşmana 1,5k hasar */
-    public String hiddetPatlamasi(Varlik dusman1, Varlik dusman2, Varlik dusman3, IskambilKart kart){
+    public String hiddetPatlamasi(Varlik[] dusmanlar, IskambilKart kart){
         int verilecekHasar = this.hasar + this.hiddet * 2;
-        StringBuilder sb = new StringBuilder();
         if(this.hiddet >= 3){
             verilecekHasar += Math.ceil(kart.deger * 1.5);
-            sb.append(this.saldir(dusman1, verilecekHasar) + "\n");
-            sb.append(this.saldir(dusman2, verilecekHasar) + "\n");
-            sb.append(this.saldir(dusman3, verilecekHasar));
+            return this.tumSaldir(dusmanlar, verilecekHasar);
         }else{
             verilecekHasar += kart.deger;
-            sb.append(this.saldir(dusman2, verilecekHasar));
+            return this.saldir(dusmanlar[1], verilecekHasar);
         }
-        return sb.toString();
     }
 
     /* Dayan */
@@ -105,19 +101,13 @@ public class Savasci extends Varlik{
         int rngSinir = 18;
         StringBuilder sb = new StringBuilder();
         if(rng <= rngSinir) {
-            Efekt yeniEfekt = new ZayiflatEfekti(3);
-            for (Varlik v : dusmanlar) {
-                v.efektler.add(yeniEfekt);
-            }
-            sb.append("Tüm düşmanlara Zayıflat uygulandı\n");
+            sb.append(this.tumUygula(dusmanlar, new ZayiflatEfekti(3)));
         }
         if(kart.siyahMi()){
             this.kaplama += 10;
             sb.append(ad + " 10 kaplama kazandı, toplam kaplama " + this.kaplama + "\n");
         }else{
-            for (Varlik v : dusmanlar) {
-                sb.append(v.hasarAl(10) + "\n");
-            }
+            this.tumSaldir(dusmanlar, 10);
         }
         return sb.toString();
     }

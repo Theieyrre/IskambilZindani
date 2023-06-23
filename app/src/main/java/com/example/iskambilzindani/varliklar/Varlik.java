@@ -41,13 +41,30 @@ public class Varlik {
         return this.ad + " " + hasarDegeri + " hasar aldı, mevcut can: " + this.mevcutCan + "\n";
     }
 
-    public String saldir(Varlik dusman, int hasar){
+    public String saldir(Varlik dusman, int hasarGucu){
         if(this.saldirabilir) {
-            String hasarDonut = dusman.hasarAl(hasar);
-            return this.ad + ", " + dusman.ad + " varlığına " + hasar + " hasar ile saldırdı\n" + hasarDonut + "\n";
+            String hasarDonut = dusman.hasarAl(hasarGucu);
+            return this.ad + ", " + dusman.ad + " varlığına " + hasarGucu + " hasar ile saldırdı\n" + hasarDonut + "\n";
         }else{
             return this.ad + " bu tur saldıramadı\n";
         }
+    }
+
+    public String tumSaldir(Varlik[] dusmanlar, int hasarGucu){
+        StringBuilder sb = new StringBuilder();
+        for(Varlik v: dusmanlar){
+            sb.append(v.hasarAl(hasarGucu));
+        }
+        return sb.toString();
+    }
+
+    public String tumUygula(Varlik[] dusmanlar, Efekt yeniEfekt){
+        StringBuilder sb = new StringBuilder();
+        for (Varlik v : dusmanlar) {
+            v.efektler.add(yeniEfekt);
+        }
+        sb.append("Tüm düşmanlara" + yeniEfekt + " uygulandı\n");
+        return sb.toString();
     }
 
     public void turSonu(){
