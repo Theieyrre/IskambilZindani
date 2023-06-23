@@ -10,27 +10,34 @@ public class Varlik {
     public int maksimumCan;
     public int mevcutCan;
     public int hasar;
-    public int zirh;
+
+    public int kaliciZirh;
+    public int ekZirh;
     public int kaplama;
     public boolean saldirabilir;
     public boolean yetenekKullanabilir;
 
-    ArrayList<Efekt> efektler;
+    public ArrayList<Efekt> efektler;
+    public ArrayList<String> yetenekler;
 
     public Varlik(String isim, int maksimumCanDegeri, int hasarGucu, int zirhDegeri, int kaplamaDegeri){
         this.ad = isim;
         this.maksimumCan = maksimumCanDegeri;
         this.mevcutCan = maksimumCanDegeri;
         this.hasar = hasarGucu;
-        this.zirh = zirhDegeri;
+        this.kaliciZirh = zirhDegeri;
+        this.ekZirh = 0;
         this.kaplama = kaplamaDegeri;
         this.saldirabilir = true;
         this.yetenekKullanabilir = true;
         this.efektler = new ArrayList<>();
+        this.yetenekler = new ArrayList<>();
     }
 
+    /* TODO add a way to call method by string (without reflection) */
+
     public String hasarAl(int hasarDegeri) {
-        int gercekHasar = hasarDegeri - this.zirh;
+        int gercekHasar = hasarDegeri - this.kaliciZirh - this.ekZirh;
         int canHasar = gercekHasar - this.kaplama;
         this.kaplama = Math.max(0, gercekHasar - this.kaplama);
         return this.gercekHasarAl(canHasar);
@@ -75,9 +82,15 @@ public class Varlik {
         this.efektler.removeIf(pr);
     }
 
+    public void sifirla(){
+        this.ekZirh = 0;
+        this.efektler = new ArrayList<>();
+    }
+
     @Override
     public String toString(){
-        String metin =  this.ad + "\nCan: " + this.maksimumCan + " Hasar: " + this.hasar + " Zırh: " + this.zirh + " Kaplama: " + this.kaplama  +"\n";
+        int toplamZirh = this.kaliciZirh + this.ekZirh;
+        String metin =  this.ad + "\nCan: " + this.maksimumCan + " Hasar: " + this.hasar + " Zırh: " + toplamZirh + " Kaplama: " + this.kaplama  +"\n";
         StringBuilder sb = new StringBuilder();
         sb.append(metin);
         for(Efekt e:this.efektler) {

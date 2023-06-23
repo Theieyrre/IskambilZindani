@@ -1,14 +1,19 @@
-package com.example.iskambilzindani.varliklar;
+package com.example.iskambilzindani.varliklar.kahramanlar;
 
 import com.example.iskambilzindani.IskambilKart;
 import com.example.iskambilzindani.efektler.Efekt;
 import com.example.iskambilzindani.efektler.ZayiflatEfekti;
+import com.example.iskambilzindani.varliklar.Varlik;
 
-public class Savasci extends Varlik{
+public class Savasci extends Varlik {
     public int hiddet;
-    public Savasci(){
+    public Savasci(String[] secilenYetenekler){
         super("Savaşçı", 25,1, 0, 0);
         this.hiddet = 0;
+        this.yetenekler.add("basitSaldiri");
+        for(String yetenek: secilenYetenekler)
+            this.yetenekler.add(yetenek);
+        this.yetenekler.add("savasinDengesi");
     }
 
     /* Basit SALDIRI */
@@ -110,5 +115,15 @@ public class Savasci extends Varlik{
             this.tumSaldir(dusmanlar, 10);
         }
         return sb.toString();
+    }
+
+    public void sifirla(){
+        super.sifirla();
+        this.hiddet = 0;
+    }
+
+    @Override
+    public String toString(){
+        return super.toString() + "Hiddet " + this.hiddet;
     }
 }
