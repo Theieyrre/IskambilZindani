@@ -12,11 +12,11 @@ public class Savasci extends Varlik{
     }
 
     /* Basit SALDIRI */
-    /* 0.5K hasar +1 hiddet eğer Karo 7 ise 2K hasar +2 hiddet */
+    /* 0.5K hasar +1 hiddet eğer Karo 7 ise 15 hasar +2 hiddet */
     public String basitSaldiri(Varlik dusman, IskambilKart kart){
         int verilecekHasar = this.hasar + this.hiddet * 2;
         if(kart.suit == 3 && kart.deger == 7){
-            verilecekHasar += kart.deger * 2;
+            verilecekHasar += 15;
             this.hiddet = Math.min(++this.hiddet, 5);
         }else{
             hasar += (int) Math.ceil(kart.deger * 0.5);
