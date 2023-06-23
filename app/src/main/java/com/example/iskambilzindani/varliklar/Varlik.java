@@ -38,15 +38,15 @@ public class Varlik {
 
     public String gercekHasarAl(int hasarDegeri) {
         this.mevcutCan = Math.max(0, this.mevcutCan - hasarDegeri);
-        return this.ad + " " + hasarDegeri + " hasar aldı, mevcut can: " + this.mevcutCan;
+        return this.ad + " " + hasarDegeri + " hasar aldı, mevcut can: " + this.mevcutCan + "\n";
     }
 
     public String saldir(Varlik dusman, int hasar){
         if(this.saldirabilir) {
             String hasarDonut = dusman.hasarAl(hasar);
-            return this.ad + ", " + dusman.ad + " varlığına " + hasar + " hasar ile saldırdı\n" + hasarDonut;
+            return this.ad + ", " + dusman.ad + " varlığına " + hasar + " hasar ile saldırdı\n" + hasarDonut + "\n";
         }else{
-            return this.ad + " bu tur saldıramadı";
+            return this.ad + " bu tur saldıramadı\n";
         }
     }
 
@@ -64,7 +64,7 @@ public class Varlik {
         StringBuilder sb = new StringBuilder();
         sb.append(metin);
         for(Efekt e:this.efektler) {
-            sb.append(e);
+            sb.append(e + "\n");
         }
         return sb.toString();
     }
