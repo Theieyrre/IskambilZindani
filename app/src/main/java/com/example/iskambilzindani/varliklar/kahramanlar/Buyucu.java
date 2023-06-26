@@ -6,17 +6,19 @@ import com.example.iskambilzindani.efektler.Efekt;
 import com.example.iskambilzindani.efektler.YanmaEfekti;
 import com.example.iskambilzindani.varliklar.Varlik;
 
-import java.util.Arrays;
-
 public class Buyucu extends Varlik {
     public int sihirGucu;
-    public Buyucu(String[] secilenYetenekler){
+    public String[] basitYetenekler = {"Ateş Topu", "Magma Patlamaları", "Donduran Yıkım", "Buz Şoku", "Çifte Yıkım"};
+    public Buyucu(){
         super("Büyücü", 20,1, 0, 0);
         this.sihirGucu = 0;
-        this.yetenekler.add("basitSaldiri");
+    }
+
+    public void yeteneklerEkle(String[] secilenYetenekler){
+        this.yetenekler.add("Basit Saldırı");
         for(String yetenek: secilenYetenekler)
             this.yetenekler.add(yetenek);
-        this.yetenekler.add("enerjiPatlamasi");
+        this.yetenekler.add("Enerji Patlaması");
     }
 
     /* Basit Saldırı */

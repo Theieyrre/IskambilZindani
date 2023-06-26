@@ -9,13 +9,17 @@ import java.util.Arrays;
 
 public class Savasci extends Varlik {
     public int hiddet;
-    public Savasci(String[] secilenYetenekler){
+    public String[] basitYetenekler = {"Hiddet Patlaması", "Dayan!", "Uyuşturan Darbe", "En İyi Defans", "Diren!"};
+    public Savasci(){
         super("Savaşçı", 25,1, 0, 0);
         this.hiddet = 0;
-        this.yetenekler.add("basitSaldiri");
+    }
+
+    public void yeteneklerEkle(String[] secilenYetenekler){
+        this.yetenekler.add("Basit Saldırı");
         for(String yetenek: secilenYetenekler)
             this.yetenekler.add(yetenek);
-        this.yetenekler.add("savasinDengesi");
+        this.yetenekler.add("Savaşın Dengesi");
     }
 
     /* Basit SALDIRI */
