@@ -2,10 +2,11 @@ package com.example.iskambilzindani.varliklar;
 
 import com.example.iskambilzindani.efektler.Efekt;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-public class Varlik {
+public class Varlik implements Serializable {
     public final String ad;
     public int maksimumCan;
     public int mevcutCan;
@@ -99,9 +100,14 @@ public class Varlik {
         String metin =  this.ad + "\nCan: " + this.maksimumCan + " Hasar: " + this.hasar + " Zırh: " + this.zirh +"\n";
         StringBuilder sb = new StringBuilder();
         sb.append(metin);
+        for(String s: this.yetenekler){
+            sb.append(s +" ,");
+        }
+        sb.append("\n");
         for(Efekt e:this.efektler) {
-            sb.append(e + "\n");
+            sb.append(e + " ,");
         }
         return sb.toString();
     }
+
 }
