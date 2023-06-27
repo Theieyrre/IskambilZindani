@@ -12,68 +12,69 @@
         android:layout_height="102dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="52dp"
-        android:text="TextView"
+        android:text="@string/kahraman_ad"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/radioButton3"
+        android:id="@+id/checkbox1"
         android:layout_width="330dp"
         android:layout_height="55dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="264dp"
-        android:text="RadioButton"
+        android:text="@string/checkbox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/radioButton8"
+        android:id="@+id/checkbox3"
         android:layout_width="330dp"
         android:layout_height="55dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="416dp"
-        android:text="RadioButton"
+        android:text="@string/checkbox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/radioButton9"
+        android:id="@+id/checkbox4"
         android:layout_width="330dp"
         android:layout_height="55dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="488dp"
-        android:text="RadioButton"
+        android:text="@string/checkbox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/radioButton4"
+        android:id="@+id/checkbox2"
         android:layout_width="330dp"
         android:layout_height="55dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="344dp"
-        android:text="RadioButton"
+        android:text="@string/checkbox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/radioButton10"
+        android:id="@+id/checkbox5"
         android:layout_width="330dp"
         android:layout_height="55dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="568dp"
-        android:text="RadioButton"
+        android:text="@string/checkbox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="149dp"
-        android:layout_height="53dp"
+        android:layout_width="274dp"
+        android:layout_height="58dp"
         android:layout_marginTop="708dp"
-        android:text="Button"
+        android:text="@string/kahraman_kaydet"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -8,12 +8,17 @@ import com.example.iskambilzindani.varliklar.Varlik;
 
 public class Buyucu extends Varlik {
     public int sihirGucu;
-    public String[] basitYetenekler = {"Ateş Topu", "Magma Patlamaları", "Donduran Yıkım", "Buz Şoku", "Çifte Yıkım"};
     public Buyucu(){
-        super("Büyücü", 20,1, 0, 0);
+        super("Büyücü", 20,1, 0);
+        this.basitYetenekler.add("Ateş Topu");
+        this.basitYetenekler.add("Magma Patlamaları");
+        this.basitYetenekler.add("Donduran Yıkım");
+        this.basitYetenekler.add("Buz Şoku");
+        this.basitYetenekler.add("Patlama Bariyeri");
         this.sihirGucu = 0;
     }
 
+    /* Kupa 8, 4, Sinek */
     public void yeteneklerEkle(String[] secilenYetenekler){
         this.yetenekler.add("Basit Saldırı");
         for(String yetenek: secilenYetenekler)
@@ -22,10 +27,10 @@ public class Buyucu extends Varlik {
     }
 
     /* Basit Saldırı */
-    /* 0,5K hasar ve +1 sihirGucu Eğer kupa6 ise 10 hasar ve 5 sihir gücü */
+    /* 0,5K hasar ve +1 sihirGucu Eğer kupa8 ise 10 hasar ve 5 sihir gücü */
     public String basitSaldiri(Varlik dusman, IskambilKart kart){
         int verilecekHasar = this.hasar + this.sihirGucu;
-        if(kart.suit == 1 && kart.deger == 6){
+        if(kart.suit == 1 && kart.deger == 8){
             verilecekHasar += 10;
             this.sihirGucu += 5;
         }else{
@@ -80,7 +85,7 @@ public class Buyucu extends Varlik {
     }
 
     /* Buz Şoku */
-    /* 1K hasar %25 Dondur(1) Eğer 4 ise %30 Dondur(1) 2 zirh */
+    /* 1K hasar %25 Dondur(1) Eğer 4 ise %30 Dondur(1) 5 zirh */
     public String buzSoku(Varlik dusman, IskambilKart kart, int rng){
         StringBuilder sb = new StringBuilder();
         int verilecekHasar = this.hasar + this.sihirGucu;
@@ -88,10 +93,9 @@ public class Buyucu extends Varlik {
         sb.append(this.saldir(dusman, verilecekHasar));
         int rngSinir = 5;
         if(kart.deger == 4){
-            this.ekZirh++;
+            this.zirh += 5;
             rngSinir = 6;
-            int toplamZirh = this.kaliciZirh + this.ekZirh;
-            sb.append(ad + " 1 zırh kazandı, toplam zırh " + toplamZirh + "\n");
+            sb.append(ad + " 5 zırh kazandı, toplam zırh " + this.zirh + "\n");
         }
         if(rng <= rngSinir){
             Efekt yeniEfekt = new DonmaEfekti(1);
@@ -101,14 +105,15 @@ public class Buyucu extends Varlik {
         return sb.toString();
     }
 
-    /* Çifte Patlama */
-    /* 1K hasar ver tüm eğer sinek ise yeniden hasar ver */
-    public String cifteYikim(Varlik[] dusmanlar, IskambilKart kart){
+    /* Patlama Bariyeri */
+    /* 1K hasar ver tüm eğer sinek ise 1K zırh */
+    public String patlamaBariyeri(Varlik[] dusmanlar, IskambilKart kart){
         StringBuilder sb = new StringBuilder();
         int verilecekHasar = this.hasar + this.sihirGucu;
         verilecekHasar += kart.deger;
         if(kart.suit == 2){
-            sb.append(this.tumSaldir(dusmanlar, verilecekHasar));
+            this.zirh += kart.deger;
+            sb.append(kart.deger + " zırh kazanıldı, toplam zırh " + this.zirh + "\n");
         }
         sb.append(this.tumSaldir(dusmanlar, verilecekHasar));
         return sb.toString();
@@ -146,7 +151,7 @@ public class Buyucu extends Varlik {
                 break;
             case "Buz Şoku": sonuc = this.buzSoku(dusmanlar[dusmanIndex], kart, rng);
                 break;
-            case "Çifte Yıkım": sonuc = this.cifteYikim(dusmanlar, kart);
+            case "Patlama Bariyeri": sonuc = this.patlamaBariyeri(dusmanlar, kart);
                 break;
             case "Enerji Patlaması": sonuc = this.enerjiPatlamasi(dusmanlar, kart, rng);
                 break;

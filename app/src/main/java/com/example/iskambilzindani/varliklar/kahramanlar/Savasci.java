@@ -5,28 +5,33 @@ import com.example.iskambilzindani.efektler.Efekt;
 import com.example.iskambilzindani.efektler.ZayiflatEfekti;
 import com.example.iskambilzindani.varliklar.Varlik;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Savasci extends Varlik {
     public int hiddet;
-    public String[] basitYetenekler = {"Hiddet Patlaması", "Dayan!", "Uyuşturan Darbe", "En İyi Defans", "Diren!"};
     public Savasci(){
-        super("Savaşçı", 25,1, 0, 0);
+        super("Savaşçı", 25,1, 0);
+        this.basitYetenekler.add("Hiddet Patlaması");
+        this.basitYetenekler.add("Dayan!");
+        this.basitYetenekler.add("Uyuşturan Darbe");
+        this.basitYetenekler.add("En İyi Defans");
+        this.basitYetenekler.add("Diren!");
         this.hiddet = 0;
     }
 
-    public void yeteneklerEkle(String[] secilenYetenekler){
+    /* Karo 9, 5 Maça */
+    public void yeteneklerEkle(ArrayList<String> ekYetenekler){
         this.yetenekler.add("Basit Saldırı");
-        for(String yetenek: secilenYetenekler)
-            this.yetenekler.add(yetenek);
+        super.yeteneklerEkle(ekYetenekler);
         this.yetenekler.add("Savaşın Dengesi");
     }
 
     /* Basit SALDIRI */
-    /* 0.5K hasar +1 hiddet eğer Karo 7 ise 15 hasar +2 hiddet */
+    /* 0.5K hasar +1 hiddet eğer Karo 9 ise 15 hasar +2 hiddet */
     public String basitSaldiri(Varlik dusman, IskambilKart kart){
         int verilecekHasar = this.hasar + this.hiddet * 2;
-        if(kart.suit == 3 && kart.deger == 7){
+        if(kart.suit == 3 && kart.deger == 9){
             verilecekHasar += 15;
             this.hiddet = Math.min(++this.hiddet, 5);
         }else{
@@ -50,15 +55,15 @@ public class Savasci extends Varlik {
     }
 
     /* Dayan */
-    /* 1K kaplama +1 hidder eğer kırmızı kartsa +2 hiddet */
+    /* 1K zırh +1 hidder eğer kırmızı kartsa +2 hiddet */
     public String dayan(IskambilKart kart){
-        int ekKaplama = kart.deger;
-        this.kaplama += ekKaplama;
+        int ekZirh = kart.deger;
+        this.zirh += ekZirh;
         this.hiddet = Math.min(++this.hiddet, 5);
         if(kart.kirmiziMi()){
             this.hiddet = Math.min(++this.hiddet, 5);
         }
-        return ad + " " + ekKaplama + " kaplama kazandı, toplam kaplama " + this.kaplama + "\n";
+        return ad + " " + ekZirh + " zırh kazandı, toplam zırh " + this.zirh + "\n";
     }
 
     /* Uyuşturan Darbe */
@@ -70,8 +75,8 @@ public class Savasci extends Varlik {
         sb.append(this.saldir(dusman, verilecekHasar));
         int rngSinir = 10;
         if(kart.siyahMi()) {
-            this.kaplama += 5;
-            sb.append(ad + " ek 5 kaplama kazandı, toplam kaplama" + this.kaplama + "\n");
+            this.zirh += 5;
+            sb.append(ad + " ek 5 zırh kazandı, toplam zırh" + this.zirh + "\n");
             rngSinir = 16;
         }if(rng <= rngSinir){
             Efekt yeniEfekt = new ZayiflatEfekti(2);
@@ -85,10 +90,10 @@ public class Savasci extends Varlik {
     /* 0,5K kaplama kaplama kadar hasar Eğer kart 5 ise ek 5 hasar */
     public String enIyiDefans(Varlik dusman, IskambilKart kart){
         StringBuilder sb = new StringBuilder();
-        int ekKaplama = (int) Math.ceil(kart.deger * 0.5);
-        this.kaplama += ekKaplama;
-        sb.append(ad + " " + ekKaplama + " kaplama kazandı, toplam kaplama " + this.kaplama + "\n");
-        int verileckeHasar = this.kaplama;
+        int ekZirh = (int) Math.ceil(kart.deger * 0.5);
+        this.zirh += ekZirh;
+        sb.append(ad + " " + ekZirh + " zırh kazandı, toplam zırh " + this.zirh + "\n");
+        int verileckeHasar = this.zirh;
         if(kart.deger == 5)
             verileckeHasar += 5;
         sb.append(this.saldir(dusman, verileckeHasar));
@@ -115,8 +120,8 @@ public class Savasci extends Varlik {
             sb.append(this.tumUygula(dusmanlar, new ZayiflatEfekti(3)));
         }
         if(kart.siyahMi()){
-            this.kaplama += 10;
-            sb.append(ad + " 10 kaplama kazandı, toplam kaplama " + this.kaplama + "\n");
+            this.zirh += 10;
+            sb.append(ad + " 10 zırh kazandı, toplam zırh " + this.zirh + "\n");
         }else{
             this.tumSaldir(dusmanlar, 10);
         }

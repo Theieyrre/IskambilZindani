@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 String text = spinner1.getSelectedItem().toString();
                 Intent i = new Intent(getApplicationContext(),EditHero.class);
                 i.putExtra("kahraman", text);
-                startActivity(i);
+                /*startActivityForResult(); */
             }
         });
 

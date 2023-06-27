@@ -11,36 +11,38 @@ public class Varlik {
     public int mevcutCan;
     public int hasar;
 
-    public int kaliciZirh;
-    public int ekZirh;
-    public int kaplama;
+    public int zirh;
     public boolean saldirabilir;
     public boolean yetenekKullanabilir;
 
     public ArrayList<Efekt> efektler;
     public ArrayList<String> yetenekler;
 
-    public Varlik(String isim, int maksimumCanDegeri, int hasarGucu, int zirhDegeri, int kaplamaDegeri){
+    public ArrayList<String> basitYetenekler;
+
+    public Varlik(String isim, int maksimumCanDegeri, int hasarGucu, int zirhDegeri){
         this.ad = isim;
         this.maksimumCan = maksimumCanDegeri;
         this.mevcutCan = maksimumCanDegeri;
         this.hasar = hasarGucu;
-        this.kaliciZirh = zirhDegeri;
-        this.ekZirh = 0;
-        this.kaplama = kaplamaDegeri;
+        this.zirh = zirhDegeri;
         this.saldirabilir = true;
         this.yetenekKullanabilir = true;
         this.efektler = new ArrayList<>();
         this.yetenekler = new ArrayList<>();
+        this.basitYetenekler = new ArrayList<>();
     }
 
-    /* TODO add a way to call method by string (without reflection) */
+    public void yeteneklerEkle(ArrayList<String> ekYetenekler){
+        for(String yetenek: ekYetenekler){
+            yetenekler.add(yetenek);
+        }
+    }
 
     public String hasarAl(int hasarDegeri) {
-        int gercekHasar = hasarDegeri - this.kaliciZirh - this.ekZirh;
-        int canHasar = gercekHasar - this.kaplama;
-        this.kaplama = Math.max(0, gercekHasar - this.kaplama);
-        return this.gercekHasarAl(canHasar);
+        int gercekHasar = hasarDegeri - this.zirh;
+        this.zirh = Math.max(0, gercekHasar - this.zirh);
+        return this.gercekHasarAl(gercekHasar);
     }
 
     public String gercekHasarAl(int hasarDegeri) {
@@ -74,23 +76,27 @@ public class Varlik {
         return sb.toString();
     }
 
-    public void turSonu(){
-        this.kaplama = 0;
+    public void turSonu() {
         this.saldirabilir = true;
         this.yetenekKullanabilir = true;
-        Predicate<Efekt> pr = e->(e.tur==0);
+        Predicate<Efekt> pr = e -> (e.tur == 0);
         this.efektler.removeIf(pr);
     }
 
+    public void turBasi(){
+        this.zirh = 0;
+        for(Efekt e: this.efektler){
+            e.tetikle(this);
+        }
+    }
+
     public void sifirla(){
-        this.ekZirh = 0;
         this.efektler = new ArrayList<>();
     }
 
     @Override
     public String toString(){
-        int toplamZirh = this.kaliciZirh + this.ekZirh;
-        String metin =  this.ad + "\nCan: " + this.maksimumCan + " Hasar: " + this.hasar + " Zırh: " + toplamZirh + " Kaplama: " + this.kaplama  +"\n";
+        String metin =  this.ad + "\nCan: " + this.maksimumCan + " Hasar: " + this.hasar + " Zırh: " + this.zirh +"\n";
         StringBuilder sb = new StringBuilder();
         sb.append(metin);
         for(Efekt e:this.efektler) {

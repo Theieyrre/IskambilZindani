@@ -3,4 +3,7 @@
     <string name="main_button">BAŞLA</string>
     <string name="main_title">İskambil Zindanı</string>
     <string name="yetenek_duzenle">Yetenek Düzenle</string>
+    <string name="checkbox">Checkbox</string>
+    <string name="kahraman_kaydet">Kahraman Kaydet</string>
+    <string name="kahraman_ad">Kahraman Adı</string>
 </resources>
