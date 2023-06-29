@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.iskambilzindani.varliklar.Varlik;
 
@@ -89,7 +88,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner4.setAdapter(dataAdapter);
 
         Button baslaButton = findViewById(R.id.button);
-        baslaButton.setOnClickListener((View v) -> Toast.makeText(getApplicationContext(),""+secilenKahramanlar.get(0), Toast.LENGTH_SHORT).show());
+        baslaButton.setOnClickListener((View v) -> {
+            Intent i = new Intent(getApplicationContext(),HubActivity.class);
+            i.putExtra("kahramanlar", this.secilenKahramanlar);
+            startActivity(i);
+        });
     }
 
     @Override

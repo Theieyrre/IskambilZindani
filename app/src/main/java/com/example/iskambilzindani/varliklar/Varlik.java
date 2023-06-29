@@ -99,15 +99,19 @@ public class Varlik implements Serializable {
     public String toString(){
         String metin =  this.ad + "\nCan: " + this.maksimumCan + " Hasar: " + this.hasar + " Zırh: " + this.zirh +"\n";
         StringBuilder sb = new StringBuilder();
-        sb.append(metin);
+        sb.append(metin + "Yetenekler: \n");
         for(String s: this.yetenekler){
-            sb.append(s +" ,");
+            sb.append(s +"\n");
         }
-        sb.append("\n");
+        sb.append("Efektler: \n");
         for(Efekt e:this.efektler) {
-            sb.append(e + " ,");
+            sb.append(e + "\n");
         }
         return sb.toString();
+    }
+
+    public String ozet(){
+        return this.ad + "\n" + "Can: " + this.mevcutCan + "/" + this.maksimumCan;
     }
 
 }

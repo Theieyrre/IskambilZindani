@@ -6,4 +6,9 @@
     <string name="checkbox">Checkbox</string>
     <string name="kahraman_kaydet">Kahraman Kaydet</string>
     <string name="kahraman_ad">Kahraman Adı</string>
+    <string name="textview">TextView</string>
+    <string name="sava">SAVAŞ!</string>
+    <string name="kart_silme_tu_u">Kart Silme Tuşu</string>
+    <string name="seviye_atlama_tu_u">Seviye Atlama Tuşu</string>
+    <string name="can_yenileme_tu_u">Can Yenileme Tuşu</string>
 </resources>
