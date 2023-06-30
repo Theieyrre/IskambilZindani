@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#FFFFFF"
     tools:context=".BattleActivity">
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="205dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="284dp"
         android:text="@string/textview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,9 +57,9 @@
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginStart="244dp"
+        android:layout_marginStart="184dp"
         android:layout_marginTop="284dp"
         android:text="@string/sava"
         app:layout_constraintStart_toStartOf="parent"
@@ -159,6 +160,17 @@
             android:layout_weight="1"
             android:text="@string/textview" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="297dp"
+        android:layout_marginTop="284dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:text="@string/sava"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

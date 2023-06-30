@@ -10,14 +10,14 @@ public class Haydut extends Varlik {
     public int kritSans;
     public boolean kacin;
     public Haydut(){
-        super("Haydut", 15,1, 0);
+        super("Haydut", 15,1, 0,3,1);
         this.basitYetenekler.add("Hazırlık");
         this.basitYetenekler.add("Gölgelere Kaçış");
         this.basitYetenekler.add("Baskın!");
         this.basitYetenekler.add("Çift Diş");
         this.basitYetenekler.add("Ağır Darbe");
         this.kritHasar = 5;
-        this.kritSans = 2;
+        this.kritSans = 1;
         this.kacin = false;
     }
 
@@ -132,7 +132,7 @@ public class Haydut extends Varlik {
 
     /* ULT */
     /* Tüm düşmanlara 2 hasar 10 krit şansı eğer kırmızıysa 10 krit hasar eğer siyahsa %100 kaçın */
-    public String karanlikHancerler(Varlik[] dusmanlar, IskambilKart kart, int rng){
+    public String karanlikHancerler(ArrayList<Varlik> dusmanlar, IskambilKart kart, int rng){
         int verilecekHasar = this.hasar + 2;
         this.kritSans += 10;
         if(kart.kirmiziMi()){
@@ -150,26 +150,36 @@ public class Haydut extends Varlik {
         this.kritSans = 2;
     }
 
-    public String saldirArayuz(String yetenekAdi, Varlik[] dusmanlar, int dusmanIndex, IskambilKart kart){
-        int rng = (int)(Math.random() * 21);
+    public String saldirArayuz(String yetenekAdi, ArrayList<Varlik> dusmanlar, Varlik dusman, IskambilKart kart){
+        int rng = (int)(Math.random() * 20);
         String sonuc = "";
-        switch(yetenekAdi){
-            case "Basit Saldırı": sonuc = this.basitSaldiri(dusmanlar[dusmanIndex], kart, rng);
-                break;
-            case "Hazırlık": sonuc = this.hazirlik(kart);
-                break;
-            case "Gölgelere Kaçış": sonuc = this.golgelereKacis(kart, rng);
-                break;
-            case "Baskın!": sonuc = this.baskin(dusmanlar[dusmanIndex], kart);
-                break;
-            case "Çift Diş": sonuc = this.ciftDis(dusmanlar[dusmanIndex], kart, rng);
-                break;
-            case "Ağır Darbe": sonuc = this.agirDarbe(dusmanlar[dusmanIndex], kart, rng);
-                break;
-            case "Karanlık Hançerler": sonuc = this.karanlikHancerler(dusmanlar, kart, rng);
-                break;
+        if(this.saldirabilir) {
+            switch (yetenekAdi) {
+                case "Basit Saldırı":
+                    sonuc = this.basitSaldiri(dusman, kart, rng);
+                    break;
+                case "Hazırlık":
+                    sonuc = this.hazirlik(kart);
+                    break;
+                case "Gölgelere Kaçış":
+                    sonuc = this.golgelereKacis(kart, rng);
+                    break;
+                case "Baskın!":
+                    sonuc = this.baskin(dusman, kart);
+                    break;
+                case "Çift Diş":
+                    sonuc = this.ciftDis(dusman, kart, rng);
+                    break;
+                case "Ağır Darbe":
+                    sonuc = this.agirDarbe(dusman, kart, rng);
+                    break;
+                case "Karanlık Hançerler":
+                    sonuc = this.karanlikHancerler(dusmanlar, kart, rng);
+                    break;
+            }
+            return sonuc;
         }
-        return sonuc;
+        return this.ad + " bu tur saldıramadı\n";
     }
 
     @Override

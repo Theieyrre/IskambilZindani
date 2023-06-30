@@ -52,7 +52,7 @@
         android:contentDescription="@string/can_yenileme_tu_u"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/heart_button_foreground" />
+        android:src="@mipmap/heart_button_foreground" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -64,7 +64,7 @@
         android:contentDescription="@string/seviye_atlama_tu_u"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/levelup_button_foreground" />
+        android:src="@mipmap/levelup_button_foreground" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -76,7 +76,7 @@
         android:contentDescription="@string/kart_silme_tu_u"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/card_button_foreground" />
+        android:src="@mipmap/card_button_foreground" />
 
     <TextView
         android:id="@+id/textView14"

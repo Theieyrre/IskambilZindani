@@ -27,7 +27,7 @@ public class EditHero extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String value  = extras.getString("kahraman");
 
-        Varlik kahraman = new Varlik("bos", 0, 0,0);
+        Varlik kahraman = new Varlik("Hayalet", 0, 0,0, 2, 1);
         switch(value){
             case "Savaşçı": kahraman = new Savasci();
             break;

@@ -8,17 +8,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.iskambilzindani.varliklar.Varlik;
-
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class HubActivity extends AppCompatActivity {
+    public ArrayList<Varlik> kahramanlar;
+    public int seviye;
 
 
     @Override
@@ -26,14 +27,16 @@ public class HubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub);
 
+        this.seviye = 1;
+
         Bundle extras = getIntent().getExtras();
-        AtomicReference<ArrayList<Varlik>> kahramanlar  = new AtomicReference<>((ArrayList<Varlik>) extras.getSerializable("kahramanlar"));
+        this.kahramanlar  = (ArrayList<Varlik>) extras.getSerializable("kahramanlar");
 
         ProgressBar yukBar = findViewById(R.id.progressBar);
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
             if(result.getData() != null && result.getResultCode() == RESULT_OK){
-                kahramanlar.set((ArrayList<Varlik>) result.getData().getSerializableExtra("kahramanlar"));
+                hubGuncelle((ArrayList<Varlik>)result.getData().getSerializableExtra("kahramanlar"));
                 yukBar.incrementProgressBy(1);
             }
         });
@@ -55,33 +58,47 @@ public class HubActivity extends AppCompatActivity {
         kart_buton.setOnClickListener((View v) -> yukBar.incrementProgressBy(-1));
 
         levelup_buton.setOnClickListener((View v) -> {
-            for(Varlik kahraman: kahramanlar.get()){
-                kahraman.hasar++;
-                kahraman.maksimumCan += 2;
+            for(Varlik kahraman: this.kahramanlar){
+                kahraman.levelAtla(1);
             }
             yukBar.incrementProgressBy(-1);
+            HUDguncelle(tvs);
         });
 
         can_buton.setOnClickListener((View v) -> {
-            for(Varlik kahraman: kahramanlar.get()){
+            for(Varlik kahraman: this.kahramanlar){
                 kahraman.mevcutCan = Math.min(kahraman.maksimumCan, kahraman.mevcutCan + 10);
             }
             yukBar.incrementProgressBy(-2);
+            HUDguncelle(tvs);
         });
 
-        for(int i = 0; i<4; i++){
-            try {
-                tvs.get(i).setText(kahramanlar.get().get(i).ozet());
-            }catch (IndexOutOfBoundsException e){
-                tvs.get(i).setVisibility(View.GONE);
-            }
-        }
+        HUDguncelle(tvs);
+
+
 
         Button savas_buton = findViewById(R.id.button7);
         savas_buton.setOnClickListener((View v) -> {
             Intent i = new Intent(getApplicationContext(),BattleActivity.class);
-            i.putExtra("kahramanlar", kahramanlar);
+            i.putExtra("kahramanlar", this.kahramanlar);
+            i.putExtra("seviye", seviye);
             activityResultLauncher.launch(i);
         });
+    }
+
+    public void hubGuncelle(ArrayList<Varlik> kahramanlarSonuc){
+        this.kahramanlar = kahramanlarSonuc;
+        this.seviye++;
+    }
+
+    public void HUDguncelle(ArrayList<TextView> tvs){
+        for(int i = 0; i<4; i++){
+            try {
+                tvs.get(i).setText(this.kahramanlar.get(i).ozet());
+            }catch (IndexOutOfBoundsException e){
+                ViewGroup parent = (ViewGroup) tvs.get(i).getParent();
+                parent.removeView(tvs.get(i));
+            }
+        }
     }
 }

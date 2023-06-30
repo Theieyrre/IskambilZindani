@@ -15,24 +15,28 @@ public class Varlik implements Serializable {
 
     public int zirh;
     public boolean saldirabilir;
-    public boolean yetenekKullanabilir;
+    public int level;
+    public int levelCanKatsayi;
+    public int levelHasarKatsayi;
 
     public ArrayList<Efekt> efektler;
     public ArrayList<String> yetenekler;
 
     public ArrayList<String> basitYetenekler;
 
-    public Varlik(String isim, int maksimumCanDegeri, int hasarGucu, int zirhDegeri){
+    public Varlik(String isim, int maksimumCanDegeri, int hasarGucu, int zirhDegeri, int levelCanKatsayiDeger, int levelHasarKatsayiDeger){
         this.ad = isim;
         this.maksimumCan = maksimumCanDegeri;
         this.mevcutCan = maksimumCanDegeri;
         this.hasar = hasarGucu;
         this.zirh = zirhDegeri;
         this.saldirabilir = true;
-        this.yetenekKullanabilir = true;
         this.efektler = new ArrayList<>();
         this.yetenekler = new ArrayList<>();
         this.basitYetenekler = new ArrayList<>();
+        this.level = 1;
+        this.levelCanKatsayi = levelCanKatsayiDeger;
+        this.levelHasarKatsayi = levelHasarKatsayiDeger;
     }
 
     public void yeteneklerEkle(ArrayList<String> ekYetenekler){
@@ -59,26 +63,32 @@ public class Varlik implements Serializable {
         }
     }
 
-    public String tumSaldir(Varlik[] dusmanlar, int hasarGucu){
+    public String uygula(Varlik dusman, Efekt yeniEfekt){
+        dusman.efektler.add(yeniEfekt);
+        return dusman.ad + " karakterine " + yeniEfekt + " uygulandı\n";
+    }
+
+    public String tumSaldir(ArrayList<Varlik> dusmanlar, int hasarGucu){
         StringBuilder sb = new StringBuilder();
-        for(Varlik v: dusmanlar){
-            sb.append(v.hasarAl(hasarGucu));
+        if(this.saldirabilir){
+            for(Varlik v: dusmanlar){
+                sb.append(v.hasarAl(hasarGucu));
+            }
+        }else{
+            return this.ad + " bu tur saldıramadı\n";
         }
         return sb.toString();
     }
 
-    public String tumUygula(Varlik[] dusmanlar, Efekt yeniEfekt){
-        StringBuilder sb = new StringBuilder();
+    public String tumUygula(ArrayList<Varlik> dusmanlar, Efekt yeniEfekt){
         for (Varlik v : dusmanlar) {
             v.efektler.add(yeniEfekt);
         }
-        sb.append("Tüm düşmanlara" + yeniEfekt + " uygulandı\n");
-        return sb.toString();
+        return "Tüm düşmanlara" + yeniEfekt + " uygulandı\n";
     }
 
     public void turSonu() {
         this.saldirabilir = true;
-        this.yetenekKullanabilir = true;
         Predicate<Efekt> pr = e -> (e.tur == 0);
         this.efektler.removeIf(pr);
     }
@@ -110,10 +120,16 @@ public class Varlik implements Serializable {
     }
 
     public String ozet(){
-        return this.ad + "\n" + "Can: " + this.mevcutCan + "/" + this.maksimumCan;
+        return this.ad + " " + "Lv." + this.level +  "\n" + "Can: " + this.mevcutCan + "/" + this.maksimumCan;
     }
 
-    public String saldirArayuz(String yetenekAdi, Varlik[] dusmanlar, int dusmanIndex, IskambilKart kart){
+    public void levelAtla(int levelFark){
+        this.level += levelFark;
+        this.maksimumCan += levelFark * this.levelCanKatsayi;
+        this.hasar += levelFark * this.levelHasarKatsayi;
+    }
+
+    public String saldirArayuz(String yetenekAdi, ArrayList<Varlik> dusmanlar, Varlik dusman, IskambilKart kart){
         return "";
     }
 

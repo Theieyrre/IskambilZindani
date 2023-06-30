@@ -2,16 +2,16 @@ package com.example.iskambilzindani.varliklar.kahramanlar;
 
 import com.example.iskambilzindani.IskambilKart;
 import com.example.iskambilzindani.efektler.Efekt;
+import com.example.iskambilzindani.efektler.YanmaEfekti;
 import com.example.iskambilzindani.efektler.ZayiflatEfekti;
 import com.example.iskambilzindani.varliklar.Varlik;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Savasci extends Varlik {
     public int hiddet;
     public Savasci(){
-        super("Savaşçı", 25,1, 0);
+        super("Savaşçı", 25,1, 0, 3, 1);
         this.basitYetenekler.add("Hiddet Patlaması");
         this.basitYetenekler.add("Dayan!");
         this.basitYetenekler.add("Uyuşturan Darbe");
@@ -42,16 +42,15 @@ public class Savasci extends Varlik {
     }
 
     /* Hiddet Patlaması */
-    /* 1K hasar eğer 3+ hiddetse ardışık 3 düşmana 1,5k hasar */
-    public String hiddetPatlamasi(Varlik[] dusmanlar, IskambilKart kart){
+    /* 1K hasar eğer 3+ hiddetse Yanma(0,5K, 2) */
+    public String hiddetPatlamasi(Varlik dusman, IskambilKart kart){
+        StringBuilder sb = new StringBuilder();
         int verilecekHasar = this.hasar + this.hiddet * 2;
-        if(this.hiddet >= 3){
-            verilecekHasar += Math.ceil(kart.deger * 1.5);
-            return this.tumSaldir(dusmanlar, verilecekHasar);
-        }else{
-            verilecekHasar += kart.deger;
-            return this.saldir(dusmanlar[1], verilecekHasar);
-        }
+        verilecekHasar += kart.deger;
+        sb.append(this.saldir(dusman, verilecekHasar));
+        if(this.hiddet >= 3)
+            sb.append(this.uygula(dusman, new YanmaEfekti( (int) Math.ceil(kart.deger * 0.5), 2)));
+        return sb.toString();
     }
 
     /* Dayan */
@@ -113,7 +112,7 @@ public class Savasci extends Varlik {
 
     /* ULT */
     /* Tüm düşmanlara %90 Zayiflat(3) eğer siyah kartsa 10 kaplama eğer kırmızıysa 10 hasar tüm düşmanlara */
-    public String savasinDengesi(Varlik[] dusmanlar, IskambilKart kart, int rng){
+    public String savasinDengesi(ArrayList<Varlik> dusmanlar, IskambilKart kart, int rng){
         int rngSinir = 18;
         StringBuilder sb = new StringBuilder();
         if(rng <= rngSinir) {
@@ -133,26 +132,29 @@ public class Savasci extends Varlik {
         this.hiddet = 0;
     }
 
-    public String saldirArayuz(String yetenekAdi, Varlik[] dusmanlar, int dusmanIndex, IskambilKart kart){
-        int rng = (int)(Math.random() * 21);
+    public String saldirArayuz(String yetenekAdi, ArrayList<Varlik> dusmanlar, Varlik dusman, IskambilKart kart){
+        int rng = (int)(Math.random() * 20);
         String sonuc = "";
-        switch(yetenekAdi){
-            case "Basit Saldırı": sonuc = this.basitSaldiri(dusmanlar[dusmanIndex], kart);
-            break;
-            case "Hiddet Patlaması": sonuc = this.hiddetPatlamasi(Arrays.copyOfRange(dusmanlar, dusmanIndex-1, dusmanIndex+1), kart);
-            break;
-            case "Dayan!": sonuc = this.dayan(kart);
-            break;
-            case "Uyuşturan Darbe": sonuc = this.uyusturanDarbe(dusmanlar[dusmanIndex], kart, rng);
-            break;
-            case "En İyi Defans": sonuc = this.enIyiDefans(dusmanlar[dusmanIndex], kart);
-            break;
-            case "Diren!": sonuc = this.diren(kart);
-            break;
-            case "Savaşın Dengesi": sonuc = this.savasinDengesi(dusmanlar, kart, rng);
-            break;
+        if(this.saldirabilir){
+            switch(yetenekAdi){
+                case "Basit Saldırı": sonuc = this.basitSaldiri(dusman, kart);
+                break;
+                case "Hiddet Patlaması": sonuc = this.hiddetPatlamasi(dusman, kart);
+                break;
+                case "Dayan!": sonuc = this.dayan(kart);
+                break;
+                case "Uyuşturan Darbe": sonuc = this.uyusturanDarbe(dusman, kart, rng);
+                break;
+                case "En İyi Defans": sonuc = this.enIyiDefans(dusman, kart);
+                break;
+                case "Diren!": sonuc = this.diren(kart);
+                break;
+                case "Savaşın Dengesi": sonuc = this.savasinDengesi(dusmanlar, kart, rng);
+                break;
+            }
+            return sonuc;
         }
-        return sonuc;
+        return this.ad + " bu tur saldıramadı\n";
     }
 
     @Override
