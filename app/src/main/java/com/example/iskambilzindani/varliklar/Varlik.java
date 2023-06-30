@@ -1,5 +1,6 @@
 package com.example.iskambilzindani.varliklar;
 
+import com.example.iskambilzindani.IskambilKart;
 import com.example.iskambilzindani.efektler.Efekt;
 
 import java.io.Serializable;
@@ -35,9 +36,7 @@ public class Varlik implements Serializable {
     }
 
     public void yeteneklerEkle(ArrayList<String> ekYetenekler){
-        for(String yetenek: ekYetenekler){
-            yetenekler.add(yetenek);
-        }
+        yetenekler.addAll(ekYetenekler);
     }
 
     public String hasarAl(int hasarDegeri) {
@@ -112,6 +111,10 @@ public class Varlik implements Serializable {
 
     public String ozet(){
         return this.ad + "\n" + "Can: " + this.mevcutCan + "/" + this.maksimumCan;
+    }
+
+    public String saldirArayuz(String yetenekAdi, Varlik[] dusmanlar, int dusmanIndex, IskambilKart kart){
+        return "";
     }
 
 }
