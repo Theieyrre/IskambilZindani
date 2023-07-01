@@ -183,8 +183,8 @@ public class Haydut extends Varlik {
     }
 
     @Override
-    public String toString(){
-        return super.toString() + "Krit Hasar " + this.kritHasar + " Krit Şans" + this.kritSans + " Kaçınma " + this.kacin;
+    public String ozet(){
+        return super.ozet() + "Krit Hasar " + this.kritHasar + " Krit Şans" + this.kritSans + " Kaçınma " + this.kacin;
     }
 
 }

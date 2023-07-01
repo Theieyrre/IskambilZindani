@@ -172,7 +172,7 @@ public class Buyucu extends Varlik {
     }
 
     @Override
-    public String toString(){
-        return super.toString() + "Sihir Gücü " + this.sihirGucu;
+    public String ozet(){
+        return super.ozet() + "Sihir Gücü " + this.sihirGucu;
     }
 }

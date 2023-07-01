@@ -27,7 +27,7 @@ public class HubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub);
 
-        this.seviye = 1;
+        this.seviye = 0;
 
         Bundle extras = getIntent().getExtras();
         this.kahramanlar  = (ArrayList<Varlik>) extras.getSerializable("kahramanlar");
@@ -94,7 +94,7 @@ public class HubActivity extends AppCompatActivity {
     public void HUDguncelle(ArrayList<TextView> tvs){
         for(int i = 0; i<4; i++){
             try {
-                tvs.get(i).setText(this.kahramanlar.get(i).ozet());
+                tvs.get(i).setText(this.kahramanlar.get(i).toString());
             }catch (IndexOutOfBoundsException e){
                 ViewGroup parent = (ViewGroup) tvs.get(i).getParent();
                 parent.removeView(tvs.get(i));

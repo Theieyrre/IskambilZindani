@@ -158,7 +158,7 @@ public class Savasci extends Varlik {
     }
 
     @Override
-    public String toString(){
-        return super.toString() + "Hiddet " + this.hiddet;
+    public String ozet(){
+        return super.ozet() + "Hiddet " + this.hiddet;
     }
 }

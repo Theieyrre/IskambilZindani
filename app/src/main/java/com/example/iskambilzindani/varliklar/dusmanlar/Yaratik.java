@@ -6,8 +6,9 @@ import com.example.iskambilzindani.varliklar.Varlik;
 import java.util.ArrayList;
 
 public class Yaratik extends Varlik {
+    public static int ID = 1;
     public Yaratik(){
-        super("Yaratık", 10, 1, 0,3, 1);
+        super("Yaratık" + (ID++), 10, 1, 0,3, 1);
     }
 
     public String saldirArayuz(String yetenekAdi, ArrayList<Varlik> dusmanlar, Varlik dusman, IskambilKart kart){

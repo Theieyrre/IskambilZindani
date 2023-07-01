@@ -104,14 +104,10 @@ public class Varlik implements Serializable {
         this.efektler = new ArrayList<>();
     }
 
-    @Override
-    public String toString(){
-        String metin =  this.ad + "\nCan: " + this.maksimumCan + " Hasar: " + this.hasar + " Zırh: " + this.zirh +"\n";
+    public String ozet(){
+        String metin =  this.ad + "\nCan: " + this.mevcutCan +  "/" + this.maksimumCan + "\nHasar: " + this.hasar + " Zırh: " + this.zirh +"\n";
         StringBuilder sb = new StringBuilder();
-        sb.append(metin + "Yetenekler: \n");
-        for(String s: this.yetenekler){
-            sb.append(s +"\n");
-        }
+        sb.append(metin + "\n");
         sb.append("Efektler: \n");
         for(Efekt e:this.efektler) {
             sb.append(e + "\n");
@@ -119,7 +115,8 @@ public class Varlik implements Serializable {
         return sb.toString();
     }
 
-    public String ozet(){
+     @Override
+    public String toString(){
         return this.ad + " " + "Lv." + this.level +  "\n" + "Can: " + this.mevcutCan + "/" + this.maksimumCan;
     }
 
