@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,8 +16,6 @@ import com.example.iskambilzindani.bolumler.BasitBolum;
 import com.example.iskambilzindani.efektler.OlumDonmasi;
 import com.example.iskambilzindani.varliklar.Varlik;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -27,7 +24,7 @@ import java.util.function.Predicate;
 public class BattleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     public Varlik saldiran;
-    public Varlik siradaki;
+
     public Queue<Varlik> saldiriSirasi;
     @SuppressLint("SetTextI18n")
     @Override
@@ -45,9 +42,6 @@ public class BattleActivity extends AppCompatActivity implements AdapterView.OnI
         saldiriSirasi.addAll(dusmanlar);
 
         TextView saldiriTakip = findViewById(R.id.textView11);
-        saldiriTakip.setText("* Savaş Başladı *");
-
-        HUDguncelle(dusmanlar, kahramanlar, saldiriTakip);
 
         Integer[] sayilar = new Integer[]{2,3,4,5,6,7,8,9,10};
         String[] suitler = new String[]{"Maça", "Kupa", "Sinek", "Karo"};
@@ -69,17 +63,13 @@ public class BattleActivity extends AppCompatActivity implements AdapterView.OnI
         sayiSpinner.setAdapter(sayilarAdapter);
 
         TextView savasSonuclari = findViewById(R.id.textView10);
+        savasSonuclari.setText("* Savaş Başladı *");
 
         Button savas = findViewById(R.id.button5);
         Button savasAI = findViewById(R.id.button8);
         int kahramanSayisi = kahramanlar.size();
 
-        this.saldiran = saldiriSirasi.remove();
-        saldiriTakip.setText("Saldıran: " + saldiran);
-        ArrayAdapter<String> yeteneklerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, this.saldiran.yetenekler);
-        yeteneklerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yetenekSpinner.setAdapter(yeteneklerAdapter);
-        saldiran.turBasi();
+        HUDguncelle(dusmanlar, kahramanlar, saldiriTakip, yetenekSpinner);
 
         savas.setOnClickListener((View v) -> {
             Varlik dusman = (Varlik) dusmanSpinner.getSelectedItem();
@@ -87,9 +77,9 @@ public class BattleActivity extends AppCompatActivity implements AdapterView.OnI
             String sonuc = saldiran.saldirArayuz(yetenekSpinner.getSelectedItem().toString(), dusmanlar, dusman, kart);
             saldiran.turSonu();
             saldiriSirasi.add(saldiran);
-            savasSonuclari.setText(savasSonuclari.getText() + sonuc);
+            savasSonuclari.setText(sonuc);
             oyunKontrol(saldiriSirasi, kahramanlar);
-            HUDguncelle(dusmanlar, kahramanlar, saldiriTakip);
+            HUDguncelle(dusmanlar, kahramanlar, saldiriTakip, yetenekSpinner);
         });
 
         savasAI.setOnClickListener((View v) -> {
@@ -97,9 +87,9 @@ public class BattleActivity extends AppCompatActivity implements AdapterView.OnI
             String sonuc = this.saldiran.saldirArayuz("", kahramanlar, kahramanlar.get(rng), null);
             this.saldiran.turSonu();
             saldiriSirasi.add(this.saldiran);
-            savasSonuclari.setText(savasSonuclari.getText() + sonuc);
+            savasSonuclari.setText(sonuc);
             oyunKontrol(saldiriSirasi, kahramanlar);
-            HUDguncelle(dusmanlar, kahramanlar, saldiriTakip);
+            HUDguncelle(dusmanlar, kahramanlar, saldiriTakip, yetenekSpinner);
         });
     }
 
@@ -116,15 +106,13 @@ public class BattleActivity extends AppCompatActivity implements AdapterView.OnI
     public void oyunKontrol(Queue<Varlik> sira, ArrayList<Varlik> kahramanlar){
         Predicate<Varlik> pr = e -> (e.mevcutCan == 0);
         sira.removeIf(pr);
-        boolean oyunBitti = false;
-        if(sira.size() == kahramanlar.size())
-            oyunBitti = true;
+        boolean oyunBitti;
+        oyunBitti = sira.size() <= kahramanlar.size();
         int oluKahraman = 0;
         for(Varlik v: kahramanlar){
             if(v.mevcutCan == 0)
                 oluKahraman++;
         }
-        oyunBitti = oluKahraman == kahramanlar.size();
         if(oyunBitti){
             Intent intent = new Intent();
             intent.putExtra("kahramanlar", kahramanlar);
@@ -133,17 +121,17 @@ public class BattleActivity extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
-    public void HUDguncelle(ArrayList<Varlik> dusmanlar, ArrayList<Varlik> kahramanlar, TextView saldiriTakip){
+    public void HUDguncelle(ArrayList<Varlik> dusmanlar, ArrayList<Varlik> kahramanlar, TextView saldiriTakip, Spinner yetenekSpinner){
 
         TextView dusman1 = findViewById(R.id.textView8);
         TextView dusman2 = findViewById(R.id.textView9);
         TextView dusman3 = findViewById(R.id.textView17);
         TextView dusman4 = findViewById(R.id.textView18);
         try{
-            dusman1.setText(dusmanlar.get(0).toString());
-            dusman2.setText(dusmanlar.get(1).toString());
-            dusman3.setText(dusmanlar.get(2).toString());
-            dusman4.setText(dusmanlar.get(3).toString());
+            dusman1.setText(dusmanlar.get(0).ozet());
+            dusman2.setText(dusmanlar.get(1).ozet());
+            dusman3.setText(dusmanlar.get(2).ozet());
+            dusman4.setText(dusmanlar.get(3).ozet());
         }catch (IndexOutOfBoundsException e){}
 
         TextView kahraman1 = findViewById(R.id.textView19);
@@ -151,10 +139,10 @@ public class BattleActivity extends AppCompatActivity implements AdapterView.OnI
         TextView kahraman3 = findViewById(R.id.textView21);
         TextView kahraman4 = findViewById(R.id.textView22);
         try{
-            kahraman1.setText(kahramanlar.get(0).toString());
-            kahraman2.setText(kahramanlar.get(1).toString());
-            kahraman3.setText(kahramanlar.get(2).toString());
-            kahraman4.setText(kahramanlar.get(3).toString());
+            kahraman1.setText(kahramanlar.get(0).ozet());
+            kahraman2.setText(kahramanlar.get(1).ozet());
+            kahraman3.setText(kahramanlar.get(2).ozet());
+            kahraman4.setText(kahramanlar.get(3).ozet());
         }catch (IndexOutOfBoundsException e){}
 
         Predicate<Varlik> pr = e -> (e.mevcutCan == 0);
@@ -165,11 +153,14 @@ public class BattleActivity extends AppCompatActivity implements AdapterView.OnI
                 v.efektler.add(new OlumDonmasi());
             }
         }
+
+
         this.saldiran = this.saldiriSirasi.remove();
         saldiriTakip.setText("Saldıran: " + saldiran);
+        ArrayAdapter<String> yeteneklerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, this.saldiran.yetenekler);
+        yeteneklerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yetenekSpinner.setAdapter(yeteneklerAdapter);
         saldiran.turBasi();
-        Log.i("saldıran", this.saldiran.toString());
-        Log.i("queue", this.saldiriSirasi.toString());
     }
 
 }

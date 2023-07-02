@@ -13,12 +13,17 @@ public class BasitBolum extends Bolum{
     }
 
     public ArrayList<Varlik> bolumYukle(){
-        Varlik[] dusmanTaslaklar = {new Iskelet(), new Kurt(), new Yaratik()};
         int dusmanRng = (int)(Math.random() * 2);
         int taslakRng;
         for (int i = 0; i< dusmanRng + 2; i++){
             taslakRng = (int) (Math.random() * 3);
-            this.dusmanlar.add(dusmanTaslaklar[taslakRng]);
+            switch (taslakRng){
+                case 0: this.dusmanlar.add(new Iskelet());
+                break;
+                case 1: this.dusmanlar.add(new Kurt());
+                break;
+                case 2: this.dusmanlar.add(new Yaratik());
+            }
         }
         for(Varlik v: this.dusmanlar){
             v.levelAtla(this.level);
